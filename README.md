@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/pwall567/kjson-spring3-test.svg?branch=main)](https://travis-ci.com/github/pwall567/kjson-spring3-test)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Kotlin](https://img.shields.io/static/v1?label=Kotlin&message=v1.7.21&color=7f52ff&logo=kotlin&logoColor=7f52ff)](https://github.com/JetBrains/kotlin/releases/tag/v1.7.21)
+[![Kotlin](https://img.shields.io/static/v1?label=Kotlin&message=v1.8.22&color=7f52ff&logo=kotlin&logoColor=7f52ff)](https://github.com/JetBrains/kotlin/releases/tag/v1.8.22)
 [![Maven Central](https://img.shields.io/maven-central/v/io.kjson/kjson-spring3-test?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.kjson%22%20AND%20a:%22kjson-spring3-test%22)
 
 Spring Boot 3 JSON testing functions for [`kjson`](https://github.com/pwall567/kjson).
@@ -307,31 +307,31 @@ configuration may be shared by both libraries.
 
 ## Dependency Specification
 
-The latest version of the library is 6.0 (the version number of this library matches the version of `kjson` with which
+The latest version of the library is 6.1 (the version number of this library matches the version of `kjson` with which
 it was built), and it may be obtained from the Maven Central repository.
 (The following dependency declarations assume that the library will be included for test purposes; this is
 expected to be its principal use.)
 
-This version was built using version 6.0.2 of Spring, and version 3.0.2 of Spring Boot.
+This version was built using version 6.0.11 of Spring, and version 3.1.2 of Spring Boot.
 
 ### Maven
 ```xml
     <dependency>
       <groupId>io.kjson</groupId>
       <artifactId>kjson-spring3-test</artifactId>
-      <version>6.0</version>
+      <version>6.1</version>
       <scope>test</scope>
     </dependency>
 ```
 ### Gradle
 ```groovy
-    testImplementation 'io.kjson:kjson-spring3-test:6.0'
+    testImplementation 'io.kjson:kjson-spring3-test:6.1'
 ```
 ### Gradle (kts)
 ```kotlin
-    testImplementation("io.kjson:kjson-spring3-test:6.0")
+    testImplementation("io.kjson:kjson-spring3-test:6.1")
 ```
 
 Peter Wall
 
-2023-07-10
+2023-07-25
