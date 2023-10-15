@@ -39,11 +39,9 @@ open class TestJSONConfig {
     @Bean open fun config(): JSONConfig = JSONConfig {
         readBufferSize = 128
         toJSON<OtherData> { other ->
-            other?.let {
-                JSONObject.build {
-                    add("aa", other.a)
-                    add("bb", other.b.reversed())
-                }
+            JSONObject.build {
+                add("aa", other.a)
+                add("bb", other.b.reversed())
             }
         }
     }

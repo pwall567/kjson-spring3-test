@@ -5,7 +5,7 @@
 
   <groupId>io.kjson</groupId>
   <artifactId>kjson-spring3-test</artifactId>
-  <version>7.0</version>
+  <version>7.1</version>
   <name>Spring Boot 3 JSON testing functions for kjson</name>
   <description>Classes to assist with testing kjson Spring Boot 3 applications.</description>
   <packaging>jar</packaging>
@@ -16,8 +16,8 @@
     <java.version>17</java.version>
     <kotlin.version>1.8.22</kotlin.version>
     <dokka.version>1.8.20</dokka.version>
-    <spring.version>6.0.11</spring.version>
-    <spring.boot.version>3.1.2</spring.boot.version>
+    <spring.version>6.0.13</spring.version>
+    <spring.boot.version>3.1.4</spring.boot.version>
     <!-- Stop IntelliJ doing stupid things with Java version! -->
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -62,12 +62,12 @@
     <dependency>
       <groupId>io.kjson</groupId>
       <artifactId>kjson</artifactId>
-      <version>7.0</version>
+      <version>7.1</version>
     </dependency>
     <dependency>
       <groupId>io.kjson</groupId>
       <artifactId>kjson-test</artifactId>
-      <version>3.8</version>
+      <version>3.10</version>
     </dependency>
     <dependency>
       <groupId>net.pwall.json</groupId>
@@ -131,7 +131,7 @@
     <dependency>
       <groupId>io.kjson</groupId>
       <artifactId>kjson-spring3</artifactId>
-      <version>7.0</version>
+      <version>7.1</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
