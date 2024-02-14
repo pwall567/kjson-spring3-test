@@ -312,26 +312,26 @@ it was built), and it may be obtained from the Maven Central repository.
 (The following dependency declarations assume that the library will be included for test purposes; this is
 expected to be its principal use.)
 
-This version was built using version 6.0.13 of Spring, and version 3.1.4 of Spring Boot.
+This version was built using version 6.1.3 of Spring, and version 3.2.2 of Spring Boot.
 
 ### Maven
 ```xml
     <dependency>
       <groupId>io.kjson</groupId>
       <artifactId>kjson-spring3-test</artifactId>
-      <version>7.1</version>
+      <version>7.5</version>
       <scope>test</scope>
     </dependency>
 ```
 ### Gradle
 ```groovy
-    testImplementation 'io.kjson:kjson-spring3-test:7.1'
+    testImplementation 'io.kjson:kjson-spring3-test:7.5'
 ```
 ### Gradle (kts)
 ```kotlin
-    testImplementation("io.kjson:kjson-spring3-test:7.1")
+    testImplementation("io.kjson:kjson-spring3-test:7.5")
 ```
 
 Peter Wall
 
-2023-10-15
+2024-02-14
