@@ -20,7 +20,7 @@ has been dropped in favour of a set of extension functions on `MockMvc`.
 ## Background
 
 The [Spring Framework](https://spring.io/projects/spring-framework) provides a number of classes to assist with testing;
-the `kjson-spring-test` library adds functionality to simplify the use of these tests in conjunction with the
+the `kjson-spring3-test` library adds functionality to simplify the use of these tests in conjunction with the
 [`kjson`](https://github.com/pwall567/kjson) library.
 
 This library is a copy of the [`kjson-spring-test`](https://github.com/pwall567/kjson-spring-test) library, converted to
