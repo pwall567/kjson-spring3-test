@@ -5,6 +5,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 The major and minor version numbers of this repository (but not patch numbers) match the version numbers of the
 [`kjson`](https://github.com/pwall567/kjson) library used by this Spring library.
 
+## [9.1] - 2024-11-03
+### Added
+- `build.yml`, `deploy.yml`: converted project to GitHub Actions
+### Changed
+- `pom.xml`: Updated version of kjson
+- `pom.xml`: updated Kotlin version to 1.9.24
+### Removed
+- `.travis.yml`
+
 ## [7.5] - 2024-02-14
 ### Changed
 - `pom.xml`: Updated version of kjson
