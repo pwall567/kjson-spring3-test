@@ -5,7 +5,7 @@
 
   <groupId>io.kjson</groupId>
   <artifactId>kjson-spring3-test</artifactId>
-  <version>9.1</version>
+  <version>9.2</version>
   <name>Spring Boot 3 JSON testing functions for kjson</name>
   <description>Classes to assist with testing kjson Spring Boot 3 applications.</description>
   <packaging>jar</packaging>
@@ -16,8 +16,8 @@
     <java.version>17</java.version>
     <kotlin.version>1.9.24</kotlin.version>
     <dokka.version>1.9.20</dokka.version>
-    <spring.version>6.1.12</spring.version>
-    <spring.boot.version>3.3.3</spring.boot.version>
+    <spring.version>6.1.16</spring.version>
+    <spring.boot.version>3.3.6</spring.boot.version>
     <!-- Stop IntelliJ doing stupid things with Java version! -->
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -62,7 +62,7 @@
     <dependency>
       <groupId>io.kjson</groupId>
       <artifactId>kjson</artifactId>
-      <version>9.1</version>
+      <version>9.2</version>
     </dependency>
     <dependency>
       <groupId>io.kjson</groupId>
@@ -123,6 +123,12 @@
       <version>${kotlin.version}</version>
     </dependency>
     <dependency>
+      <groupId>io.kstuff</groupId>
+      <artifactId>should-test</artifactId>
+      <version>4.3</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.jetbrains.kotlin</groupId>
       <artifactId>kotlin-test-junit</artifactId>
       <version>${kotlin.version}</version>
@@ -131,7 +137,7 @@
     <dependency>
       <groupId>io.kjson</groupId>
       <artifactId>kjson-spring3</artifactId>
-      <version>9.1</version>
+      <version>9.2</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

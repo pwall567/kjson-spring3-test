@@ -26,8 +26,8 @@
 package io.kjson.spring.test.matchers
 
 import kotlin.test.Test
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+
+import io.kstuff.test.shouldBe
 
 import org.springframework.http.MediaType
 
@@ -35,17 +35,17 @@ class MediaTypeMatcherTest {
 
     @Test fun `should match valid MediaType`() {
         val mediaTypeMatcher = MediaTypeMatcher(MediaType.APPLICATION_JSON)
-        assertTrue(mediaTypeMatcher.matches(MediaType.APPLICATION_JSON_VALUE))
+        mediaTypeMatcher.matches(MediaType.APPLICATION_JSON_VALUE) shouldBe true
     }
 
     @Test fun `should reject invalid MediaType`() {
         val mediaTypeMatcher = MediaTypeMatcher(MediaType.APPLICATION_JSON)
-        assertFalse(mediaTypeMatcher.matches("COMPLETELY_WRONG"))
+        mediaTypeMatcher.matches("COMPLETELY_WRONG") shouldBe false
     }
 
     @Test fun `should reject valid but incorrect MediaType`() {
         val mediaTypeMatcher = MediaTypeMatcher(MediaType.APPLICATION_JSON)
-        assertFalse(mediaTypeMatcher.matches(MediaType.TEXT_PLAIN_VALUE))
+        mediaTypeMatcher.matches(MediaType.TEXT_PLAIN_VALUE) shouldBe false
     }
 
 }

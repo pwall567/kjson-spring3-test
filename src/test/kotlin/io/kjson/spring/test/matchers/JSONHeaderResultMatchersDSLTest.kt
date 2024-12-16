@@ -26,8 +26,6 @@
 package io.kjson.spring.test.matchers
 
 import kotlin.test.Test
-import kotlin.test.assertFailsWith
-import kotlin.test.expect
 
 import java.util.UUID
 
@@ -38,6 +36,8 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
+
+import io.kstuff.test.shouldThrow
 
 import io.kjson.spring.JSONSpring
 import io.kjson.spring.test.TestConfiguration
@@ -64,7 +64,7 @@ class JSONHeaderResultMatchersDSLTest {
     }
 
     @Test fun `should throw error on incorrect returned header`() {
-        assertFailsWith<AssertionError> {
+        shouldThrow<AssertionError>("Response header '$headerName' expected:<WRONG> but was:<$uuid>") {
             mockMvc.postForJSON("/returnheader") {
                 content = RequestData(uuid, headerName)
             }.andExpect {
@@ -73,8 +73,6 @@ class JSONHeaderResultMatchersDSLTest {
                     string(headerName, "WRONG")
                 }
             }
-        }.let {
-            expect("Response header '$headerName' expected:<WRONG> but was:<$uuid>") { it.message }
         }
     }
 
@@ -90,7 +88,7 @@ class JSONHeaderResultMatchersDSLTest {
     }
 
     @Test fun `should throw error when returned header does not exist`() {
-        assertFailsWith<AssertionError> {
+        shouldThrow<AssertionError>("Response should contain header 'UNKNOWN'") {
             mockMvc.postForJSON("/returnheader") {
                 content = RequestData(uuid, headerName)
             }.andExpect {
@@ -99,8 +97,6 @@ class JSONHeaderResultMatchersDSLTest {
                     exists("UNKNOWN")
                 }
             }
-        }.let {
-            expect("Response should contain header 'UNKNOWN'") { it.message }
         }
     }
 
@@ -116,7 +112,7 @@ class JSONHeaderResultMatchersDSLTest {
     }
 
     @Test fun `should throw error when unexpected header does exist`() {
-        assertFailsWith<AssertionError> {
+        shouldThrow<AssertionError>("Response should not contain header 'x-test-header'") {
             mockMvc.postForJSON("/returnheader") {
                 content = RequestData(uuid, headerName)
             }.andExpect {
@@ -125,12 +121,11 @@ class JSONHeaderResultMatchersDSLTest {
                     doesNotExist(headerName)
                 }
             }
-        }.let {
-            expect("Response should not contain header 'x-test-header'") { it.message }
         }
     }
 
     companion object {
+        @Suppress("ConstPropertyName")
         const val headerName = "x-test-header"
         val uuid: UUID = UUID.fromString("4db82b50-e7b6-11ed-97eb-9b2c3c58aad6")
     }

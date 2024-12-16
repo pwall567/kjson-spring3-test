@@ -25,13 +25,7 @@
 
 package io.kjson.spring.test
 
-import io.kjson.spring.test.data.RequestData
-import io.kjson.spring.test.data.ResponseData
 import kotlin.test.Test
-import kotlin.test.assertFailsWith
-import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
-import kotlin.test.expect
 
 import java.net.URI
 import java.time.LocalDate
@@ -54,6 +48,13 @@ import org.springframework.web.client.getForEntity
 import org.springframework.web.client.getForObject
 import org.springframework.web.client.postForObject
 
+import io.kstuff.test.shouldBe
+import io.kstuff.test.shouldBeNonNull
+import io.kstuff.test.shouldContain
+import io.kstuff.test.shouldThrow
+
+import io.kjson.spring.test.data.RequestData
+import io.kjson.spring.test.data.ResponseData
 import io.kjson.spring.test.matchers.UUIDMatcher
 
 @RunWith(SpringRunner::class)
@@ -72,7 +73,7 @@ class JSONMockServerTest {
             ResponseData(date = LocalDate.of(2022, 7, 12), extra = "OK")
         }
         val response = restTemplate.getForObject<String>("/testendpoint")
-        expect("""{"date":"2022-07-12","extra":"OK"}""") { response }
+        response shouldBe """{"date":"2022-07-12","extra":"OK"}"""
         mockServer.verify()
     }
 
@@ -85,8 +86,8 @@ class JSONMockServerTest {
         }.respondJSON {
             ResponseData(date = LocalDate.of(2022, 7, 12), extra = "OK")
         }
-        assertFailsWith<AssertionError> { restTemplate.getForObject<String>("/testendpoint") }.let {
-            expect("Request method incorrect; expected POST, was GET") { it.message }
+        shouldThrow<AssertionError>("Request method incorrect; expected POST, was GET") {
+            restTemplate.getForObject<String>("/testendpoint")
         }
     }
 
@@ -97,7 +98,7 @@ class JSONMockServerTest {
             ResponseData(date = LocalDate.of(2022, 7, 12), extra = "OK")
         }
         val response = restTemplate.getForObject<String>("/testendpoint")
-        expect("""{"date":"2022-07-12","extra":"OK"}""") { response }
+        response shouldBe """{"date":"2022-07-12","extra":"OK"}"""
         mockServer.verify()
     }
 
@@ -107,8 +108,8 @@ class JSONMockServerTest {
         mockServer.mockGet(uri = URI("/testendpoint")).respondJSON {
             ResponseData(date = LocalDate.of(2022, 7, 12), extra = "OK")
         }
-        assertFailsWith<AssertionError> { restTemplate.postForObject<String>("/testendpoint") }.let {
-            expect("Request method incorrect; expected GET, was POST") { it.message }
+        shouldThrow<AssertionError>("Request method incorrect; expected GET, was POST") {
+            restTemplate.postForObject<String>("/testendpoint")
         }
     }
 
@@ -119,7 +120,7 @@ class JSONMockServerTest {
             ResponseData(date = LocalDate.of(2022, 7, 12), extra = "OK")
         }
         val response = restTemplate.postForObject<String>("/testendpoint")
-        expect("""{"date":"2022-07-12","extra":"OK"}""") { response }
+        response shouldBe """{"date":"2022-07-12","extra":"OK"}"""
         mockServer.verify()
     }
 
@@ -129,8 +130,8 @@ class JSONMockServerTest {
         mockServer.mockPost(uri = URI("/testendpoint")).respondJSON {
             ResponseData(date = LocalDate.of(2022, 7, 12), extra = "OK")
         }
-        assertFailsWith<AssertionError> { restTemplate.getForObject<String>("/testendpoint") }.let {
-            expect("Request method incorrect; expected POST, was GET") { it.message }
+        shouldThrow<AssertionError>("Request method incorrect; expected POST, was GET") {
+            restTemplate.getForObject<String>("/testendpoint")
         }
     }
 
@@ -145,7 +146,7 @@ class JSONMockServerTest {
             ResponseData(date = LocalDate.of(2022, 7, 12), extra = "OK")
         }
         val response = restTemplate.getForObject<String>("/testendpoint?abc=123")
-        expect("""{"date":"2022-07-12","extra":"OK"}""") { response }
+        response shouldBe """{"date":"2022-07-12","extra":"OK"}"""
         mockServer.verify()
     }
 
@@ -159,12 +160,14 @@ class JSONMockServerTest {
         }.respondJSON {
             ResponseData(date = LocalDate.of(2022, 7, 12), extra = "OK")
         }
-        assertFailsWith<AssertionError> { restTemplate.getForObject<String>("/testendpoint") }.let {
+        shouldThrow<AssertionError> {
+            restTemplate.getForObject<String>("/testendpoint")
+        }.let {
             it.message.let { m ->
-                assertNotNull(m)
-                assertTrue(m.contains("Request URI"))
-                assertTrue(m.contains("/testpointend"))
-                assertTrue(m.contains("/testendpoint"))
+                m.shouldBeNonNull()
+                m shouldContain "Request URI"
+                m shouldContain "/testpointend"
+                m shouldContain "/testendpoint"
             }
         }
     }
@@ -179,7 +182,7 @@ class JSONMockServerTest {
             ResponseData(date = LocalDate.of(2022, 7, 12), extra = "OK")
         }
         val response = restTemplate.getForObject<String>("/testendpoint?abc=123")
-        expect("""{"date":"2022-07-12","extra":"OK"}""") { response }
+        response shouldBe """{"date":"2022-07-12","extra":"OK"}"""
         mockServer.verify()
     }
 
@@ -192,8 +195,8 @@ class JSONMockServerTest {
         }.respondJSON {
             ResponseData(date = LocalDate.of(2022, 7, 12), extra = "OK")
         }
-        assertFailsWith<java.lang.AssertionError> { restTemplate.getForObject<String>("/testendpoint") }.let {
-            expect("Request URI doesn't match; was /testendpoint") { it.message }
+        shouldThrow<java.lang.AssertionError>("Request URI doesn't match; was /testendpoint") {
+            restTemplate.getForObject<String>("/testendpoint")
         }
     }
 
@@ -208,7 +211,7 @@ class JSONMockServerTest {
             ResponseData(date = LocalDate.of(2022, 7, 12), extra = "OK")
         }
         val response = restTemplate.getForObject<String>("/testendpoint?param1=abc")
-        expect("""{"date":"2022-07-12","extra":"OK"}""") { response }
+        response shouldBe """{"date":"2022-07-12","extra":"OK"}"""
         mockServer.verify()
     }
 
@@ -222,8 +225,8 @@ class JSONMockServerTest {
         }.respondJSON {
             ResponseData(date = LocalDate.of(2022, 7, 12), extra = "OK")
         }
-        assertFailsWith<AssertionError> { restTemplate.getForObject<String>("/testendpoint") }.let {
-            expect("Request query param [param1] not found") { it.message }
+        shouldThrow<AssertionError>("Request query param [param1] not found") {
+            restTemplate.getForObject<String>("/testendpoint")
         }
     }
 
@@ -237,8 +240,8 @@ class JSONMockServerTest {
         }.respondJSON {
             ResponseData(date = LocalDate.of(2022, 7, 12), extra = "OK")
         }
-        assertFailsWith<AssertionError> { restTemplate.getForObject<String>("/testendpoint?param1=xyz") }.let {
-            expect("Request query param [param1] incorrect; expected abc, was xyz") { it.message }
+        shouldThrow<AssertionError>("Request query param [param1] incorrect; expected abc, was xyz") {
+            restTemplate.getForObject<String>("/testendpoint?param1=xyz")
         }
     }
 
@@ -253,7 +256,7 @@ class JSONMockServerTest {
             ResponseData(date = LocalDate.of(2022, 7, 12), extra = "OK")
         }
         val response = restTemplate.getForObject<String>("/testendpoint?uuid=9ee826a8-13d9-11ed-9752-672495249b25")
-        expect("""{"date":"2022-07-12","extra":"OK"}""") { response }
+        response shouldBe """{"date":"2022-07-12","extra":"OK"}"""
         mockServer.verify()
     }
 
@@ -267,8 +270,8 @@ class JSONMockServerTest {
         }.respondJSON {
             ResponseData(date = LocalDate.of(2022, 7, 12), extra = "OK")
         }
-        assertFailsWith<AssertionError> { restTemplate.getForObject<String>("/testendpoint?uuid=not-a-uuid") }.let {
-            expect("Request query param [uuid] incorrect") { it.message }
+        shouldThrow<AssertionError>("Request query param [uuid] incorrect") {
+            restTemplate.getForObject<String>("/testendpoint?uuid=not-a-uuid")
         }
     }
 
@@ -284,7 +287,7 @@ class JSONMockServerTest {
         }
         val requestEntity = RequestEntity.method(HttpMethod.GET, "/testendpoint").header("X-Custom-1", "ABC").build()
         val response = restTemplate.exchange<String>(requestEntity)
-        expect("""{"date":"2022-07-12","extra":"OK"}""") { response.body }
+        response.body shouldBe """{"date":"2022-07-12","extra":"OK"}"""
         mockServer.verify()
     }
 
@@ -299,8 +302,8 @@ class JSONMockServerTest {
             ResponseData(date = LocalDate.of(2022, 7, 12), extra = "OK")
         }
         val requestEntity = RequestEntity.method(HttpMethod.GET, "/testendpoint").header("X-Custom-1", "AAA").build()
-        assertFailsWith<AssertionError> { restTemplate.exchange<String>(requestEntity) }.let {
-            expect("Request header [X-Custom-1] incorrect; expected ABC, was AAA") { it.message }
+        shouldThrow<AssertionError>("Request header [X-Custom-1] incorrect; expected ABC, was AAA") {
+            restTemplate.exchange<String>(requestEntity)
         }
     }
 
@@ -316,7 +319,7 @@ class JSONMockServerTest {
         }
         val requestEntity = RequestEntity.method(HttpMethod.GET, "/testendpoint").header("X-Custom-1", "ABC").build()
         val response = restTemplate.exchange<String>(requestEntity)
-        expect("""{"date":"2022-07-12","extra":"OK"}""") { response.body }
+        response.body shouldBe """{"date":"2022-07-12","extra":"OK"}"""
         mockServer.verify()
     }
 
@@ -331,8 +334,8 @@ class JSONMockServerTest {
             ResponseData(date = LocalDate.of(2022, 7, 12), extra = "OK")
         }
         val requestEntity = RequestEntity.method(HttpMethod.GET, "/testendpoint").header("X-Custom-1", "BBB").build()
-        assertFailsWith<AssertionError> { restTemplate.exchange<String>(requestEntity) }.let {
-            expect("Request header [X-Custom-1] incorrect; was BBB") { it.message }
+        shouldThrow<AssertionError>("Request header [X-Custom-1] incorrect; was BBB") {
+            restTemplate.exchange<String>(requestEntity)
         }
     }
 
@@ -349,7 +352,7 @@ class JSONMockServerTest {
         val requestEntity =
                 RequestEntity.method(HttpMethod.GET, "/testendpoint").accept(MediaType.APPLICATION_JSON).build()
         val response = restTemplate.exchange<String>(requestEntity)
-        expect("""{"date":"2022-07-12","extra":"OK"}""") { response.body }
+        response.body shouldBe """{"date":"2022-07-12","extra":"OK"}"""
         mockServer.verify()
     }
 
@@ -364,8 +367,8 @@ class JSONMockServerTest {
             ResponseData(date = LocalDate.of(2022, 7, 12), extra = "OK")
         }
         val requestEntity = RequestEntity.method(HttpMethod.GET, "/testendpoint").accept(MediaType.TEXT_PLAIN).build()
-        assertFailsWith<AssertionError> { restTemplate.exchange<String>(requestEntity) }.let {
-            expect("Request [Accept] header incorrect; expected application/json, was text/plain") { it.message }
+        shouldThrow<AssertionError>("Request [Accept] header incorrect; expected application/json, was text/plain") {
+            restTemplate.exchange<String>(requestEntity)
         }
     }
 
@@ -386,7 +389,7 @@ class JSONMockServerTest {
         }
         val requestEntity = RequestEntity("DATA!", headers, HttpMethod.POST, URI("/testendpoint"))
         val response = restTemplate.exchange<String>(requestEntity)
-        expect("""{"date":"2022-07-21","extra":"OK"}""") { response.body }
+        response.body shouldBe """{"date":"2022-07-21","extra":"OK"}"""
         mockServer.verify()
     }
 
@@ -406,8 +409,10 @@ class JSONMockServerTest {
             contentType = MediaType.TEXT_PLAIN
         }
         val requestEntity = RequestEntity("DATA!", headers, HttpMethod.POST, URI("/testendpoint"))
-        assertFailsWith<java.lang.AssertionError> { restTemplate.exchange<String>(requestEntity) }.let {
-            expect("Request [Content-Type] header incorrect; expected application/json, was text/plain") { it.message }
+        shouldThrow<java.lang.AssertionError>(
+            message = "Request [Content-Type] header incorrect; expected application/json, was text/plain",
+        ) {
+            restTemplate.exchange<String>(requestEntity)
         }
     }
 
@@ -428,7 +433,7 @@ class JSONMockServerTest {
         }
         val requestEntity = RequestEntity("DATA!", headers, HttpMethod.POST, URI("/testendpoint"))
         val response = restTemplate.exchange<String>(requestEntity)
-        expect("""{"date":"2022-07-21","extra":"OK"}""") { response.body }
+        response.body shouldBe """{"date":"2022-07-21","extra":"OK"}"""
         mockServer.verify()
     }
 
@@ -448,8 +453,8 @@ class JSONMockServerTest {
             contentType = MediaType.TEXT_PLAIN
         }
         val requestEntity = RequestEntity("DATA!", headers, HttpMethod.POST, URI("/testendpoint"))
-        assertFailsWith<AssertionError> { restTemplate.exchange<String>(requestEntity) }.let {
-            expect("Request body incorrect") { it.message }
+        shouldThrow<AssertionError>("Request body incorrect") {
+            restTemplate.exchange<String>(requestEntity)
         }
     }
 
@@ -473,7 +478,7 @@ class JSONMockServerTest {
         val requestData = RequestData(id = testUUID, name = "Mary")
         val requestEntity = RequestEntity(requestData, headers, HttpMethod.POST, URI("/testendpoint"))
         val response = restTemplate.exchange<String>(requestEntity)
-        expect("""{"date":"2022-07-21","extra":"OK"}""") { response.body }
+        response.body shouldBe """{"date":"2022-07-21","extra":"OK"}"""
         mockServer.verify()
     }
 
@@ -496,8 +501,8 @@ class JSONMockServerTest {
         }
         val requestData = RequestData(id = testUUID, name = "Maria")
         val requestEntity = RequestEntity(requestData, headers, HttpMethod.POST, URI("/testendpoint"))
-        assertFailsWith<AssertionError> { restTemplate.exchange<String>(requestEntity) }.let {
-            expect("""/name: JSON value doesn't match - expected "Mary", was "Maria"""") { it.message }
+        shouldThrow<AssertionError>("""/name: JSON value doesn't match - expected "Mary", was "Maria"""") {
+            restTemplate.exchange<String>(requestEntity)
         }
     }
 
@@ -511,7 +516,7 @@ class JSONMockServerTest {
             ResponseData(date = LocalDate.of(2022, 7, 12), extra = "OK")
         }
         val response = restTemplate.getForObject<String>("/testendpoint")
-        expect("""{"date":"2022-07-12","extra":"OK"}""") { response }
+        response shouldBe """{"date":"2022-07-12","extra":"OK"}"""
         mockServer.verify()
     }
 
@@ -528,8 +533,8 @@ class JSONMockServerTest {
             set("X-Test-1", "Shouldn't be here")
         }
         val requestEntity = RequestEntity<Unit>(headers, HttpMethod.GET, URI("/testendpoint"))
-        assertFailsWith<java.lang.AssertionError> { restTemplate.exchange<String>(requestEntity) }.let {
-            expect("Request [X-Test-1] header expected not to be present") { it.message }
+        shouldThrow<java.lang.AssertionError>("Request [X-Test-1] header expected not to be present") {
+            restTemplate.exchange<String>(requestEntity)
         }
     }
 
@@ -542,7 +547,7 @@ class JSONMockServerTest {
             respondJSON(result = ResponseData(date = LocalDate.of(2022, 7, 12), extra = "XXX"))
         }
         val response = restTemplate.getForObject<String>("/testendpoint")
-        expect("""{"date":"2022-07-12","extra":"XXX"}""") { response }
+        response shouldBe """{"date":"2022-07-12","extra":"XXX"}"""
         mockServer.verify()
     }
 
@@ -557,7 +562,7 @@ class JSONMockServerTest {
             }
         }
         val response = restTemplate.getForObject<String>("/testendpoint?it=works")
-        expect("""{"date":"2022-07-12","extra":"works"}""") { response }
+        response shouldBe """{"date":"2022-07-12","extra":"works"}"""
         mockServer.verify()
     }
 
@@ -570,7 +575,7 @@ class JSONMockServerTest {
             respond(result = "OK!")
         }
         val response = restTemplate.getForObject<String>("/testendpoint")
-        expect("OK!") { response }
+        response shouldBe "OK!"
         mockServer.verify()
     }
 
@@ -583,7 +588,7 @@ class JSONMockServerTest {
             respond { "${getParam("why")}" }
         }
         val response = restTemplate.getForObject<String>("/testendpoint?why=not")
-        expect("not") { response }
+        response shouldBe "not"
         mockServer.verify()
     }
 
@@ -596,7 +601,7 @@ class JSONMockServerTest {
             respond(HttpStatus.CREATED)
         }
         val response = restTemplate.getForEntity<Unit>("/testendpoint")
-        expect(HttpStatus.CREATED) { response.statusCode }
+        response.statusCode shouldBe HttpStatus.CREATED
         mockServer.verify()
     }
 
@@ -609,7 +614,7 @@ class JSONMockServerTest {
             respondTextPlain(result = "Good")
         }
         val response = restTemplate.getForObject<String>("/testendpoint")
-        expect("Good") { response }
+        response shouldBe "Good"
         mockServer.verify()
     }
 
@@ -622,7 +627,7 @@ class JSONMockServerTest {
             respondTextPlain { "${getParam("it")}" }
         }
         val response = restTemplate.getForObject<String>("/testendpoint?it=nice")
-        expect("nice") { response }
+        response shouldBe "nice"
         mockServer.verify()
     }
 
@@ -635,7 +640,7 @@ class JSONMockServerTest {
             respondBytes(result = "Better".toByteArray())
         }
         val response = restTemplate.getForObject<String>("/testendpoint")
-        expect("Better") { response }
+        response shouldBe "Better"
         mockServer.verify()
     }
 
@@ -648,7 +653,7 @@ class JSONMockServerTest {
             respondBytes { "${getParam("it")}".toByteArray() }
         }
         val response = restTemplate.getForObject<String>("/testendpoint?it=very_nice")
-        expect("very_nice") { response }
+        response shouldBe "very_nice"
         mockServer.verify()
     }
 
@@ -662,8 +667,8 @@ class JSONMockServerTest {
             }
             respond(HttpStatus.OK)
         }
-        assertFailsWith<AssertionError> { restTemplate.getForObject<String>("/testendpoint") }.let {
-            expect("Response already set") { it.message }
+        shouldThrow<AssertionError>("Response already set") {
+            restTemplate.getForObject<String>("/testendpoint")
         }
     }
 
@@ -677,8 +682,8 @@ class JSONMockServerTest {
                 ResponseData(date = LocalDate.of(2022, 7, 12), extra = getParam("a").toString())
             }
         }
-        expect("""{"date":"2022-07-12","extra":"XXX"}""") { restTemplate.getForObject("/testendpoint?a=XXX") }
-        expect("""{"date":"2022-07-12","extra":"YYY"}""") { restTemplate.getForObject("/testendpoint?a=YYY") }
+        restTemplate.getForObject<String>("/testendpoint?a=XXX") shouldBe """{"date":"2022-07-12","extra":"XXX"}"""
+        restTemplate.getForObject<String>("/testendpoint?a=YYY") shouldBe """{"date":"2022-07-12","extra":"YYY"}"""
         mockServer.verify()
     }
 
@@ -697,8 +702,8 @@ class JSONMockServerTest {
         }.respondJSON {
             ResponseData(date = LocalDate.of(2022, 7, 12), extra = "BBBB")
         }
-        expect("""{"date":"2022-07-12","extra":"AAAA"}""") { restTemplate.getForObject("/testendpointA") }
-        expect("""{"date":"2022-07-12","extra":"BBBB"}""") { restTemplate.getForObject("/testendpointB") }
+        restTemplate.getForObject<String>("/testendpointA") shouldBe """{"date":"2022-07-12","extra":"AAAA"}"""
+        restTemplate.getForObject<String>("/testendpointB") shouldBe """{"date":"2022-07-12","extra":"BBBB"}"""
         mockServer.verify()
     }
 

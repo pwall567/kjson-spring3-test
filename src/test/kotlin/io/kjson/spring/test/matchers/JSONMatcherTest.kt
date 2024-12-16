@@ -26,8 +26,6 @@
 package io.kjson.spring.test.matchers
 
 import kotlin.test.Test
-import kotlin.test.assertFailsWith
-import kotlin.test.expect
 
 import java.time.LocalDate
 
@@ -38,6 +36,8 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
+
+import io.kstuff.test.shouldThrow
 
 import io.kjson.spring.JSONSpring
 import io.kjson.spring.test.TestConfiguration
@@ -62,7 +62,7 @@ class JSONMatcherTest {
     }
 
     @Test fun `should fail on incorrect JSON output`() {
-        assertFailsWith<AssertionError> {
+        shouldThrow<AssertionError>("/extra: JSON value doesn't match - expected \"Goodbye!\", was \"Hello!\"") {
             mockMvc.getForJSON("/testendpoint").andExpect {
                 status { isOk() }
                 content {
@@ -72,8 +72,6 @@ class JSONMatcherTest {
                     }
                 }
             }
-        }.let {
-            expect("/extra: JSON value doesn't match - expected \"Goodbye!\", was \"Hello!\"") { it.message }
         }
     }
 

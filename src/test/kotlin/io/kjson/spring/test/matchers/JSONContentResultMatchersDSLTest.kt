@@ -26,8 +26,6 @@
 package io.kjson.spring.test.matchers
 
 import kotlin.test.Test
-import kotlin.test.assertFailsWith
-import kotlin.test.expect
 
 import java.time.LocalDate
 
@@ -40,6 +38,9 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
+
+import io.kstuff.test.shouldBe
+import io.kstuff.test.shouldThrow
 
 import io.kjson.spring.JSONSpring
 import io.kjson.spring.test.TestConfiguration
@@ -57,14 +58,14 @@ class JSONContentResultMatchersDSLTest {
     @Test fun `should allow access to response object`() {
         mockMvc.getForJSON("/testendpoint").andExpect {
             status { isOk() }
-            expect("""{"date":"2022-07-06","extra":"Hello!"}""") { response.contentAsString }
+            response.contentAsString shouldBe """{"date":"2022-07-06","extra":"Hello!"}"""
         }
     }
 
     @Test fun `should allow access to response content string`() {
         mockMvc.getForJSON("/testendpoint").andExpect {
             status { isOk() }
-            expect("""{"date":"2022-07-06","extra":"Hello!"}""") { contentAsString }
+            contentAsString shouldBe """{"date":"2022-07-06","extra":"Hello!"}"""
         }
     }
 
@@ -78,15 +79,13 @@ class JSONContentResultMatchersDSLTest {
     }
 
     @Test fun `should throw error on incorrect content type`() {
-        assertFailsWith<AssertionError> {
+        shouldThrow<AssertionError>("Content type expected:<text/plain> but was:<application/json;charset=UTF-8>") {
             mockMvc.getForJSON("/testendpoint").andExpect {
                 status { isOk() }
                 content {
                     contentType("text/plain")
                 }
             }
-        }.let {
-            expect("Content type expected:<text/plain> but was:<application/json;charset=UTF-8>") { it.message }
         }
     }
 
@@ -109,15 +108,15 @@ class JSONContentResultMatchersDSLTest {
     }
 
     @Test fun `should throw error on incorrect content type compatible with`() {
-        assertFailsWith<AssertionError> {
+        shouldThrow<AssertionError>(
+            message = "Content type [application/json;charset=UTF-8] is not compatible with [image/jpeg]",
+        ) {
             mockMvc.getForJSON("/testendpoint").andExpect {
                 status { isOk() }
                 content {
                     contentTypeCompatibleWith("image/jpeg")
                 }
             }
-        }.let {
-            expect("Content type [application/json;charset=UTF-8] is not compatible with [image/jpeg]") { it.message }
         }
     }
 
@@ -149,16 +148,12 @@ class JSONContentResultMatchersDSLTest {
     }
 
     @Test fun `should throw error on incorrect content as string`() {
-        assertFailsWith<AssertionError> {
+        shouldThrow<AssertionError>("Response content expected:<$wrong> but was:<$right>") {
             mockMvc.getForJSON("/testendpoint").andExpect {
                 status { isOk() }
                 content {
                     string(wrong)
                 }
-            }
-        }.let {
-            expect("""Response content expected:<$wrong> but was:<$right>""") {
-                it.message
             }
         }
     }
@@ -185,7 +180,7 @@ class JSONContentResultMatchersDSLTest {
     }
 
     @Test fun `should throw error on incorrect content using matchesJSON`() {
-        assertFailsWith<AssertionError> {
+        shouldThrow<AssertionError>("""/extra: JSON value doesn't match - expected "Goodbye!", was "Hello!"""") {
             mockMvc.get("/testendpoint").andExpect {
                 status { isOk() }
                 content {
@@ -195,11 +190,10 @@ class JSONContentResultMatchersDSLTest {
                     }
                 }
             }
-        }.let {
-            expect("""/extra: JSON value doesn't match - expected "Goodbye!", was "Hello!"""") { it.message }
         }
     }
 
+    @Suppress("ConstPropertyName")
     companion object {
         const val right = """{"date":"2022-07-06","extra":"Hello!"}"""
         const val wrong = """{"date":"2022-07-06","extra":"Goodbye!"}"""

@@ -26,22 +26,22 @@
 package io.kjson.spring.test.matchers
 
 import kotlin.test.Test
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+
+import io.kstuff.test.shouldBe
 
 class UUIDMatcherTest {
 
     @Test fun `should match valid UUID`() {
-        assertTrue(UUIDMatcher.matches("047f0902-034d-11ed-aa8b-1f435b59e616"))
+        UUIDMatcher.matches("047f0902-034d-11ed-aa8b-1f435b59e616") shouldBe true
     }
 
     @Test fun `should fail on invalid UUID`() {
-        assertFalse(UUIDMatcher.matches("047f0902-034d-11ed-aa8b-1f435b59e61")) // one character short
+        UUIDMatcher.matches("047f0902-034d-11ed-aa8b-1f435b59e61") shouldBe false // one character short
     }
 
     @Test fun `should match valid UUID using function`() {
         val matcher = UUIDMatcher.isValidUUID()
-        assertTrue(matcher.matches("047f0902-034d-11ed-aa8b-1f435b59e616"))
+        matcher.matches("047f0902-034d-11ed-aa8b-1f435b59e616") shouldBe true
     }
 
 }
