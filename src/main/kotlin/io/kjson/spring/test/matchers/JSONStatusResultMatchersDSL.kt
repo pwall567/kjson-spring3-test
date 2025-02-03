@@ -366,6 +366,6 @@ class JSONStatusResultMatchersDSL(private val response: MockHttpServletResponse)
     }
 
     private fun findStatus(code: Int): String =
-            HttpStatus.values().find { it.value() == code }?.toString() ?: "$code UNKNOWN"
+            HttpStatus.entries.find { it.value() == code }?.toString() ?: "$code UNKNOWN"
 
 }

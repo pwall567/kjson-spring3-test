@@ -2,7 +2,7 @@
 
 [![Build Status](https://github.com/pwall567/kjson-spring3-test/actions/workflows/build.yml/badge.svg)](https://github.com/pwall567/kjson-spring3-test/actions/workflows/build.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Kotlin](https://img.shields.io/static/v1?label=Kotlin&message=v1.9.24&color=7f52ff&logo=kotlin&logoColor=7f52ff)](https://github.com/JetBrains/kotlin/releases/tag/v1.9.24)
+[![Kotlin](https://img.shields.io/static/v1?label=Kotlin&message=v2.0.21&color=7f52ff&logo=kotlin&logoColor=7f52ff)](https://github.com/JetBrains/kotlin/releases/tag/v2.0.21)
 [![Maven Central](https://img.shields.io/maven-central/v/io.kjson/kjson-spring3-test?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.kjson%22%20AND%20a:%22kjson-spring3-test%22)
 
 Spring Boot 3 JSON testing functions for [`kjson`](https://github.com/pwall567/kjson).
@@ -55,12 +55,12 @@ The functions use a DSL broadly similar to that used by the existing `get` and `
 above, which uses the `header` function from that DSL.
 A major difference is in the handling of the `content` property of the DSL &ndash; if it is set to a `String` or
 `ByteArray` value it will be used as is, but any other type of object will be serialized using the `kjson` library, and
-JSON form will be sent as the content (with the `Content-Type` set to `application/json`, unless already set to a
+the JSON form will be sent as the content (with the `Content-Type` set to `application/json`, unless already set to a
 different value).
 
 ### `contentJSON`
 
-To set the JSON content explicitly as JSON, the `contentJSON` function may be used:
+To set the request JSON content explicitly as JSON, the `contentJSON` function may be used:
 ```kotlin
         mockMvc.postForJSON("/testendpoint") {
             contentJSON {
@@ -307,31 +307,31 @@ configuration may be shared by both libraries.
 
 ## Dependency Specification
 
-The latest version of the library is 9.3 (the version number of this library matches the version of `kjson` with which
+The latest version of the library is 9.5 (the version number of this library matches the version of `kjson` with which
 it was built), and it may be obtained from the Maven Central repository.
 (The following dependency declarations assume that the library will be included for test purposes; this is
 expected to be its principal use.)
 
-This version was built using version 6.1.16 of Spring, and version 3.3.6 of Spring Boot.
+This version was built using version 6.2.2 of Spring, and version 3.4.2 of Spring Boot.
 
 ### Maven
 ```xml
     <dependency>
       <groupId>io.kjson</groupId>
       <artifactId>kjson-spring3-test</artifactId>
-      <version>9.3</version>
+      <version>9.5</version>
       <scope>test</scope>
     </dependency>
 ```
 ### Gradle
 ```groovy
-    testImplementation 'io.kjson:kjson-spring3-test:9.3'
+    testImplementation 'io.kjson:kjson-spring3-test:9.5'
 ```
 ### Gradle (kts)
 ```kotlin
-    testImplementation("io.kjson:kjson-spring3-test:9.3")
+    testImplementation("io.kjson:kjson-spring3-test:9.5")
 ```
 
 Peter Wall
 
-2024-12-19
+2025-02-04

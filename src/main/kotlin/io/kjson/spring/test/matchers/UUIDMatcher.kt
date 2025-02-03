@@ -28,7 +28,7 @@ package io.kjson.spring.test.matchers
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
 
-import net.pwall.json.validation.JSONValidation
+import io.jstuff.json.validation.JSONValidation
 
 /**
  * A `Matcher` that tests whether a string is a valid `UUID`.

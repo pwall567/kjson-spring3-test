@@ -2,7 +2,7 @@
  * @(#) JSONMockClientRequest.kt
  *
  * kjson-spring3-test  Spring Boot 3 JSON testing functions for kjson
- * Copyright (c) 2022 Peter Wall
+ * Copyright (c) 2022, 2025 Peter Wall
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -68,6 +68,8 @@ class JSONMockClientRequest(
     override fun getURI(): URI = mockClientHttpRequest.uri
 
     override fun getHeaders(): HttpHeaders = mockClientHttpRequest.headers
+
+    override fun getAttributes(): MutableMap<String, Any> = mockClientHttpRequest.attributes
 
     fun getHeaders(name: String): List<String>? = headers[name]
 
