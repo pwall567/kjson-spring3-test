@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 The major and minor version numbers of this repository (but not patch numbers) match the version numbers of the
 [`kjson`](https://github.com/pwall567/kjson) library used by this Spring library.
 
+## [9.7] - 2025-03-20
+### Changed
+- `pom.xml`: updated dependency versions
+
 ## [9.6] - 2025-02-09
 ### Changed
 - `pom.xml`: updated dependency versions

@@ -5,7 +5,7 @@
 
   <groupId>io.kjson</groupId>
   <artifactId>kjson-spring3-test</artifactId>
-  <version>9.6</version>
+  <version>9.7</version>
   <name>Spring Boot 3 JSON testing functions for kjson</name>
   <description>Classes to assist with testing kjson Spring Boot 3 applications.</description>
   <packaging>jar</packaging>
@@ -16,8 +16,8 @@
     <java.version>17</java.version>
     <kotlin.version>2.0.21</kotlin.version>
     <dokka.version>2.0.0</dokka.version>
-    <spring.version>6.2.2</spring.version>
-    <spring.boot.version>3.4.2</spring.boot.version>
+    <spring.version>6.2.4</spring.version>
+    <spring.boot.version>3.4.3</spring.boot.version>
     <!-- Stop IntelliJ doing stupid things with Java version! -->
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -62,7 +62,7 @@
     <dependency>
       <groupId>io.kjson</groupId>
       <artifactId>kjson</artifactId>
-      <version>9.6</version>
+      <version>9.7</version>
     </dependency>
     <dependency>
       <groupId>io.kjson</groupId>
@@ -126,7 +126,7 @@
     <dependency>
       <groupId>io.kstuff</groupId>
       <artifactId>should-test</artifactId>
-      <version>4.4</version>
+      <version>4.5</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -138,7 +138,7 @@
     <dependency>
       <groupId>io.kjson</groupId>
       <artifactId>kjson-spring3</artifactId>
-      <version>9.6</version>
+      <version>9.7</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
