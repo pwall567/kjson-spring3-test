@@ -1,8 +1,8 @@
 /*
- * @(#) JSONSpringTest.kt
+ * @(#) JSONSpringTestAutoConfiguration.kt
  *
- * kjson-spring3-test  Spring Boot 3 JSON testing functions for kjson
- * Copyright (c) 2023 Peter Wall
+ * kjson-spring3  Spring Boot 3 JSON message converter for kjson
+ * Copyright (c) 2025 Peter Wall
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,25 +26,28 @@
 package io.kjson.spring.test
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.test.web.client.MockRestServiceServer
-import org.springframework.web.client.RestTemplate
+import org.springframework.boot.autoconfigure.AutoConfiguration
+import org.springframework.boot.autoconfigure.AutoConfigureOrder
+import org.springframework.context.annotation.Bean
+import org.springframework.core.Ordered
 
 import io.kjson.JSONConfig
 
 /**
- * Entry point for `kjson-spring-test` client testing functions.  Includes function to create [JSONMockServer]
- * instances.
+ * Auto-configuration class for `kjson` testing and Spring Boot 3.
  *
  * @author  Peter Wall
  */
-class JSONSpringTest(
-    @Autowired(required = false) autowiredConfig: JSONConfig?,
-) {
+@AutoConfiguration
+@AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE)
+@Suppress("unused")
+open class JSONSpringTestAutoConfiguration {
 
-    private val config: JSONConfig = autowiredConfig ?: JSONConfig.defaultConfig
-
-    fun createServer(restTemplate: RestTemplate): JSONMockServer {
-        return JSONMockServer(MockRestServiceServer.createServer(restTemplate), config)
+    @Bean
+    open fun createJSONSpringTest(
+        @Autowired(required = false) jsonConfig: JSONConfig?,
+    ): JSONSpringTest {
+        return JSONSpringTest(jsonConfig)
     }
 
 }

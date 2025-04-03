@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 The major and minor version numbers of this repository (but not patch numbers) match the version numbers of the
 [`kjson`](https://github.com/pwall567/kjson) library used by this Spring library.
 
+## [9.7.1] - 2025-04-03
+### Added
+- `JSONSpringTestAutoConfiguration`, config files: attempt to make use of Spring Boot auto--configure functionality
+
 ## [9.7] - 2025-03-20
 ### Changed
 - `pom.xml`: updated dependency versions

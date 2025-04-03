@@ -5,7 +5,7 @@
 
   <groupId>io.kjson</groupId>
   <artifactId>kjson-spring3-test</artifactId>
-  <version>9.7</version>
+  <version>9.7.1</version>
   <name>Spring Boot 3 JSON testing functions for kjson</name>
   <description>Classes to assist with testing kjson Spring Boot 3 applications.</description>
   <packaging>jar</packaging>
